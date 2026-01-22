@@ -1,0 +1,53 @@
+using BepInEx;
+using HarmonyLib;
+using R2API;
+using RoR2;
+using SyncLib.Core;
+using System;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+
+namespace SyncLib
+{
+    [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
+    public class Plugin : BaseUnityPlugin
+    {
+        public const string PluginGUID = "com." + PluginAuthor + "." + PluginName;
+        public const string PluginAuthor = "salatt";
+        public const string PluginName = "SyncLib";
+        public const string PluginVersion = "0.0.0";
+
+        internal static Plugin Instance;
+        internal static Harmony Harmony;
+
+        internal static bool BeatDebug;
+
+        public void Awake()
+        {
+            Instance = this;
+
+            Log.Init(Logger);
+
+            Log.Info("SyncLib initializing...");
+
+            BeatDebug = false;
+
+            Harmony = new Harmony(PluginGUID);
+            Harmony.PatchAll();
+
+            try
+            {
+                var go = new GameObject("SyncLib_MusicSyncRunner");
+                go.hideFlags = HideFlags.HideAndDontSave;
+                go.AddComponent<MusicSyncRunner>();
+            }
+            catch (Exception e)
+            {
+                Log.Warning($"Failed to create MusicSyncRunner: {e}");
+            }
+            
+            Log.Info("SyncLib initialized!");
+        }
+    }
+}
