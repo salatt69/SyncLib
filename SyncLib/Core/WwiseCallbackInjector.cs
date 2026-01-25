@@ -26,19 +26,27 @@ namespace SyncLib.Core
 
         internal static AkCallbackManager.EventCallback Chain(AkCallbackManager.EventCallback existing)
         {
-            return existing == null
-                ? Callback
-                : (AkCallbackManager.EventCallback)Delegate.Combine(Callback, existing);
+            if (existing == null) return Callback;
+
+            // if our callback already exists in the invocation list, don't add.
+            foreach (var d in existing.GetInvocationList())
+            {
+                if (d == (Delegate)Callback)
+                    return existing;
+            }
+
+            return (AkCallbackManager.EventCallback)Delegate.Combine(existing, Callback);
         }
 
         private static void OnAkCallback(object cookie, AkCallbackType type, AkCallbackInfo info)
         {
             try
             {
+
 #if DEBUG
                 if (Interlocked.Exchange(ref _loggedFirst, 1) == 0)
                 {
-                    Log.Info($"First AkCallback received: type={type} infoType={info?.GetType().FullName ?? "null"}");
+                    Log.Info($"AkCallback received: type={type} infoType={info?.GetType().FullName ?? "null"}");
                 }
 #endif
 

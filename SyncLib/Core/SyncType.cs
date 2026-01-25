@@ -11,5 +11,6 @@ namespace SyncLib.Core
         Grid,
         Entry,
         Exit,
+        CustomBar,
     }
 }

@@ -21,7 +21,7 @@ namespace SyncLib
         internal static Plugin Instance;
         internal static Harmony Harmony;
 
-        internal static bool BeatDebug;
+        internal static bool LogBeats;
 
         public void Awake()
         {
@@ -31,7 +31,7 @@ namespace SyncLib
 
             Log.Info("SyncLib initializing...");
 
-            BeatDebug = false;
+            LogBeats = false;
 
             Harmony = new Harmony(PluginGUID);
             Harmony.PatchAll();
@@ -41,6 +41,7 @@ namespace SyncLib
                 var go = new GameObject("SyncLib_MusicSyncRunner");
                 go.hideFlags = HideFlags.HideAndDontSave;
                 go.AddComponent<MusicSyncRunner>();
+                DontDestroyOnLoad(go);
             }
             catch (Exception e)
             {
