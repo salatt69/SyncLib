@@ -11,7 +11,7 @@ using UnityEngine.AddressableAssets;
 namespace SyncLib
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
-    public class Plugin : BaseUnityPlugin
+    internal class Plugin : BaseUnityPlugin
     {
         public const string PluginGUID = "com." + PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "salatt";

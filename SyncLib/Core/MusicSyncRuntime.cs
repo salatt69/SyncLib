@@ -29,6 +29,10 @@ namespace SyncLib.Core
         private static uint _activePlayingId;
         public static uint ActivePlayingId => _activePlayingId;
 
+        // time signature
+        private static readonly int _beatsPerBar = 4;
+        private static readonly int _note = 4;
+
         private static long _entryIndex;
         private static long _exitIndex;
         private static long _beatIndex;
@@ -52,17 +56,20 @@ namespace SyncLib.Core
 
         // custom bar tracking
         private static int _customBarThisFrame;
-        private static int _beatsToBarCount = -1;
+        
+        // That allows custom bar to start at the first beat of the new track
+        // and don't wait for "_beatsPerBar amount of beats" to pass, to invoke bar event   
+        private static int _beatsUntilBar = _beatsPerBar - 1;
 
-        // Nth beat tracking
+        // Nth-beat tracking
         private static long _firstBeatIndexThisFrame;
         private static int _beatCountThisFrame;
 
-        public static event Action<API.EntryEvent>? Entry;
-        public static event Action<API.ExitEvent>? Exit;
-        public static event Action<API.BeatEvent>? Beat;
-        public static event Action<API.BarEvent>? Bar;
-        public static event Action<API.CustomBarEvent>? CustomBar;
+        public static event Action<EntryEvent> Entry;
+        public static event Action<ExitEvent> Exit;
+        public static event Action<BeatEvent> Beat;
+        public static event Action<BarEvent> Bar;
+        public static event Action<CustomBarEvent> CustomBar;
 
         public static void EnsureInitialized()
         {
@@ -110,14 +117,14 @@ namespace SyncLib.Core
                 {
                     case SyncType.Beat:
                         {
-                            int beatInBar = Interlocked.Increment(ref _beatsToBarCount);
-                            if (beatInBar >= 4)
+                            int beatInBar = Interlocked.Increment(ref _beatsUntilBar);
+                            if (beatInBar >= _beatsPerBar)
                             {
-                                Interlocked.Exchange(ref _beatsToBarCount, 0);
+                                Interlocked.Exchange(ref _beatsUntilBar, 0);
 
                                 var newCustomBar = Interlocked.Increment(ref _customBarIndex);
                                 Volatile.Write(ref _customBarThisFrame, Volatile.Read(ref _customBarThisFrame) + 1);
-                                CustomBar?.Invoke(new API.CustomBarEvent(_activePlayingId, newCustomBar, msg.AudioTimeSeconds));
+                                CustomBar?.Invoke(new CustomBarEvent(_activePlayingId, newCustomBar, msg.AudioTimeSeconds));
 
                                 if (Plugin.LogBeats) Log.Info($"CustomBar! PlayingID={_activePlayingId} CustomBarIndex={newCustomBar}");
                             }
@@ -129,7 +136,7 @@ namespace SyncLib.Core
                             Volatile.Write(ref _beatThisFrame, Volatile.Read(ref _beatThisFrame) + 1);
                             Volatile.Write(ref _beatCountThisFrame, Volatile.Read(ref _beatCountThisFrame) + 1);
 
-                            Beat?.Invoke(new API.BeatEvent(_activePlayingId, newBeat, msg.AudioTimeSeconds));
+                            Beat?.Invoke(new BeatEvent(_activePlayingId, newBeat, msg.AudioTimeSeconds));
 
                             if (Plugin.LogBeats) Log.Info($"Beat! PlayingID={_activePlayingId} BeatIndex={newBeat}");
                             break;
@@ -139,7 +146,7 @@ namespace SyncLib.Core
                         {
                             var newBar = Interlocked.Increment(ref _barIndex);
                             Volatile.Write(ref _barThisFrame, Volatile.Read(ref _barThisFrame) + 1);
-                            Bar?.Invoke(new API.BarEvent(_activePlayingId, newBar, msg.AudioTimeSeconds));
+                            Bar?.Invoke(new BarEvent(_activePlayingId, newBar, msg.AudioTimeSeconds));
 
                             if (Plugin.LogBeats) Log.Info($"Bar! PlayingID={_activePlayingId} BarIndex={newBar}");
                             break;
@@ -149,12 +156,12 @@ namespace SyncLib.Core
                         {
                             var newEntry = Interlocked.Increment(ref _entryIndex);
                             Volatile.Write(ref _entryThisFrame, Volatile.Read(ref _entryThisFrame) + 1);
-                            Entry?.Invoke(new API.EntryEvent(_activePlayingId, newEntry, msg.AudioTimeSeconds));
+                            Entry?.Invoke(new EntryEvent(_activePlayingId, newEntry, msg.AudioTimeSeconds));
 
                             if (Plugin.LogBeats) Log.Info($"Entry! PlayingID={_activePlayingId} EntryIndex={newEntry}");
 
                             // to keep in in sync with everything else, reset when new entry occurs
-                            Interlocked.Exchange(ref _beatsToBarCount, -1);
+                            Interlocked.Exchange(ref _beatsUntilBar, _beatsPerBar - 1);
                             break;
                         }
 
@@ -162,7 +169,7 @@ namespace SyncLib.Core
                         {
                             var newExit = Interlocked.Increment(ref _exitIndex);
                             Volatile.Write(ref _exitThisFrame, Volatile.Read(ref _exitThisFrame) + 1);
-                            Exit?.Invoke(new API.ExitEvent(_activePlayingId, newExit, msg.AudioTimeSeconds));
+                            Exit?.Invoke(new ExitEvent(_activePlayingId, newExit, msg.AudioTimeSeconds));
 
                             if (Plugin.LogBeats) Log.Info($"Exit! PlayingID={_activePlayingId} ExitIndex={newExit}");
                             break;
@@ -191,7 +198,7 @@ namespace SyncLib.Core
             Volatile.Write(ref _exitThisFrame, 0);
             Volatile.Write(ref _customBarThisFrame, 0);
 
-            Volatile.Write(ref _beatsToBarCount, -1);
+            Volatile.Write(ref _beatsUntilBar, _beatsPerBar - 1);
 
             Volatile.Write(ref _firstBeatIndexThisFrame, 0);
             Volatile.Write(ref _beatCountThisFrame, 0);

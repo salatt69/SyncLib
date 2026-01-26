@@ -3,9 +3,9 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 
-namespace SyncLib.API
+namespace SyncLib.Dev
 {
-    public static class WwiseProbe
+    internal static class WwiseProbe
     {
         private static bool _ran;
 
