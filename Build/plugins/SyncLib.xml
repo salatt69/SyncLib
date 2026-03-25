@@ -90,6 +90,26 @@
             </remarks>
             <value>A monotonically increasing index for custom bar events within the current session.</value>
         </member>
+        <member name="P:SyncLib.API.MusicSync.BeatInterval">
+            <summary>
+            Gets the duration of a single beat in seconds.
+            </summary>
+            <remarks>
+            This value is authoritative and exact for the currently playing track.
+            </remarks>
+        </member>
+        <member name="P:SyncLib.API.MusicSync.BPM">
+            <summary>
+            Gets the tempo of the current track in beats per minute (BPM).
+            </summary>
+            <remarks>
+            This is calculated from <see cref="P:SyncLib.API.MusicSync.BeatInterval"/> and may take a few beats
+            to stabilize after music starts or changes.
+            <para>
+            Returns 0 if the interval is not yet available.
+            </para>
+            </remarks>
+        </member>
         <member name="M:SyncLib.API.MusicSync.Initialize(System.Boolean)">
             <summary>
             Initializes music synchronization settings for the current process.
@@ -162,14 +182,14 @@
             </summary>
             <remarks>
             <para>
-            <paramref name="nBeat"/>: The subdivision to test (for example, <c>2</c> for every 2nd beat, <c>3</c> for every 3rd beat).
+            <paramref name="NthBeat"/>: The subdivision to test (for example, <c>2</c> for every 2nd beat, <c>3</c> for every 3rd beat).
             </para>
             <para>
             Prefer this method when you need regular musical subdivisions without tracking counters manually.
             </para>
             </remarks>
             <returns>
-            <c>true</c> on frames where the current beat is an <paramref name="nBeat"/> multiple; otherwise <c>false</c>.
+            <c>true</c> on frames where the current beat is an <paramref name="NthBeat"/> multiple; otherwise <c>false</c>.
             </returns>
         </member>
     </members>

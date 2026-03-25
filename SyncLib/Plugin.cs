@@ -38,8 +38,10 @@ namespace SyncLib
 
             try
             {
-                var go = new GameObject("SyncLib_MusicSyncRunner");
-                go.hideFlags = HideFlags.HideAndDontSave;
+                var go = new GameObject("SyncLib_MusicSyncRunner")
+                {
+                    hideFlags = HideFlags.HideAndDontSave
+                };
                 go.AddComponent<MusicSyncRunner>();
                 DontDestroyOnLoad(go);
             }

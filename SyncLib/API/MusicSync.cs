@@ -90,6 +90,26 @@ namespace SyncLib.API
         public static long CustomBarIndex => MusicSyncRuntime.CustomBarIndex;
 
         /// <summary>
+        /// Gets the duration of a single beat in seconds.
+        /// </summary>
+        /// <remarks>
+        /// This value is authoritative and exact for the currently playing track.
+        /// </remarks>
+        public static double BeatInterval => MusicSyncRuntime.BeatInterval;
+
+        /// <summary>
+        /// Gets the tempo of the current track in beats per minute (BPM).
+        /// </summary>
+        /// <remarks>
+        /// This is calculated from <see cref="BeatInterval"/> and may take a few beats
+        /// to stabilize after music starts or changes.
+        /// <para>
+        /// Returns 0 if the interval is not yet available.
+        /// </para>
+        /// </remarks>
+        public static double BPM => MusicSyncRuntime.BPM;
+
+        /// <summary>
         /// Initializes music synchronization settings for the current process.
         /// </summary>
         /// <remarks>

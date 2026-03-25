@@ -42,14 +42,12 @@ namespace SyncLib.Core
         {
             try
             {
-
 #if DEBUG
                 if (Interlocked.Exchange(ref _loggedFirst, 1) == 0)
                 {
                     Log.Info($"AkCallback received: type={type} infoType={info?.GetType().FullName ?? "null"}");
                 }
 #endif
-
                 if (type != AkCallbackType.AK_MusicSyncBeat &&
                     type != AkCallbackType.AK_MusicSyncBar &&
                     type != AkCallbackType.AK_MusicSyncGrid &&
@@ -65,24 +63,25 @@ namespace SyncLib.Core
                     return;
                 }
 
-                double audioTimeSeconds = 0; // idk
+                double beatDuration = m.segmentInfo_fBeatDuration;
+                uint playingID = m.playingID;
 
                 switch (type)
                 {
                     case AkCallbackType.AK_MusicSyncBeat:
-                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Beat, m.playingID, 0, audioTimeSeconds));
+                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Beat, playingID, 0, beatDuration));
                         break;
                     case AkCallbackType.AK_MusicSyncBar:
-                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Bar, m.playingID, 0, audioTimeSeconds));
+                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Bar, playingID, 0, beatDuration));
                         break;
                     case AkCallbackType.AK_MusicSyncGrid:
-                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Grid, m.playingID, 0, audioTimeSeconds));
+                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Grid, playingID, 0, beatDuration));
                         break;
                     case AkCallbackType.AK_MusicSyncEntry:
-                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Entry, m.playingID, 0, audioTimeSeconds));
+                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Entry, playingID, 0, beatDuration));
                         break;
                     case AkCallbackType.AK_MusicSyncExit:
-                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Exit, m.playingID, 0, audioTimeSeconds));
+                        MusicSyncRuntime.EnqueueFromWwise(new SyncMsg(SyncType.Exit, playingID, 0, beatDuration));
                         break;
                 }
             }
