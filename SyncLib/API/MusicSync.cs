@@ -190,5 +190,18 @@ namespace SyncLib.API
         /// <c>true</c> on frames where the current beat is an <paramref name="NthBeat"/> multiple; otherwise <c>false</c>.
         /// </returns>
         public static bool OnNthBeat(int NthBeat) => MusicSyncRuntime.NthBeatThisFrame(NthBeat);
+
+        /// <summary>
+        /// Registers a custom Wwise event name prefix to be recognized as music by SyncLib.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Call this during your mod's <c>Awake</c> before any music events are posted.
+        /// </para>
+        /// <para>
+        /// Matching is case-insensitive and uses <see cref="string.Contains(string)"/>.
+        /// </para>
+        /// </remarks>
+        public static void RegisterMusicEventPrefix(string prefix) => WwisePostEventRedirect.RegisterMusicEventPrefix(prefix);
     }
 }

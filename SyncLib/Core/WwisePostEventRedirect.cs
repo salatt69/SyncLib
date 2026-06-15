@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using HarmonyLib;
 using UnityEngine;
@@ -12,9 +13,10 @@ namespace SyncLib.Core
         private const int RedirectLogEvery = 50;
 
         private static int _redirectCount;
+        private static readonly HashSet<string> _musicPrefixes = [ "Play_Music" ];
 
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(AkSoundEngine.PostEvent), new Type[] { typeof(string), typeof(GameObject) })]
+        [HarmonyPatch(nameof(AkSoundEngine.PostEvent), [typeof(string), typeof(GameObject)])]
         private static bool Prefix(string in_pszEventName, GameObject in_gameObjectID, ref uint __result)
         {
             if (WwiseMusicSyncTap.Redirecting) return true;
@@ -57,7 +59,18 @@ namespace SyncLib.Core
         {
             if (string.IsNullOrEmpty(name)) return false;
 
-            return name.StartsWith("Play_Music", StringComparison.OrdinalIgnoreCase);
+            foreach (string prefix in _musicPrefixes)
+            {
+                if (name.Contains(prefix, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        public static void RegisterMusicEventPrefix(string prefix)
+        {
+            if (!string.IsNullOrEmpty(prefix))
+                _musicPrefixes.Add(prefix);
         }
     }
 }
