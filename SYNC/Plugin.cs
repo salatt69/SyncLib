@@ -2,13 +2,13 @@ using BepInEx;
 using HarmonyLib;
 using R2API;
 using RoR2;
-using SyncLib.Core;
+using SYNC.Core;
 using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace SyncLib
+namespace SYNC
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     internal class Plugin : BaseUnityPlugin

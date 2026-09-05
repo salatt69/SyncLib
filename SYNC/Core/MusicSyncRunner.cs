@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SyncLib.Core
+namespace SYNC.Core
 {
     internal sealed class MusicSyncRunner : MonoBehaviour
     {

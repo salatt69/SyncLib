@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 
-namespace SyncLib.Dev
+namespace SYNC.Dev
 {
     internal static class WwiseProbe
     {

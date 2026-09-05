@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace SyncLib.Core
+namespace SYNC.Core
 {
     [HarmonyPatch(typeof(AkSoundEngine))]
     internal static class WwiseMusicSyncTap

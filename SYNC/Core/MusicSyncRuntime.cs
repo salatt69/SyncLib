@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace SyncLib.Core
+namespace SYNC.Core
 {
     internal readonly struct SyncMsg(SyncType type, uint playingId, int gridDiv, double beatDuration)
     {

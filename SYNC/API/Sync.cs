@@ -1,14 +1,14 @@
 ﻿using System;
-using SyncLib.Core;
+using SYNC.Core;
 
-namespace SyncLib.API
+namespace SYNC.API
 {
     /// <summary>
     /// High-level, thread-safe accessors for synchronizing gameplay or application logic to musical timing.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// <see cref="MusicSync"/> exposes the current playback state and provides per-frame “edge” queries (for example,
+    /// <see cref="Sync"/> exposes the current playback state and provides per-frame “edge” queries (for example,
     /// <see cref="OnBeat"/> or <see cref="OnBar"/>) that return <c>true</c> only on the frame a timing event occurs.
     /// </para>
     /// <para>
@@ -20,7 +20,7 @@ namespace SyncLib.API
     /// regular update loop for deterministic behavior.
     /// </para>
     /// </remarks>
-    public static class MusicSync
+    public static class Sync
     {
         /// <summary>
         /// Gets whether music playback is currently active.

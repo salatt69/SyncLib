@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SyncLib.Core
+namespace SYNC.Core
 {
     internal enum SyncType : byte
     {

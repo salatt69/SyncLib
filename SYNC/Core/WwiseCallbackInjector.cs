@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace SyncLib.Core
+namespace SYNC.Core
 {
     internal static class WwiseCallbackInjector
     {

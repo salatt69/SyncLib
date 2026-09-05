@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="if &quot;$(Username)&quot; == &quot;dud&quot; set build=true&#xD;&#xA;&#xD;&#xA;if defined build (&#xD;&#xA;copy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\Build\plugins&quot;&#xD;&#xA;&#xD;&#xA;copy &quot;$(TargetDir)*.xml&quot; &quot;$(ProjectDir)..\Build\plugins&quot;&#xD;&#xA;&#xD;&#xA;Xcopy /E /I /Y &quot;$(ProjectDir)..\Build\plugins&quot; &quot;D:\r2\r2profiles\RiskOfRain2\profiles\dev\BepInEx\plugins\salatt-SyncLib\&quot;&#xD;&#xA;&#xD;&#xA;Xcopy /E /I /Y &quot;$(ProjectDir)..\Build\plugins&quot; &quot;D:\Projects\ProjectSynth\ProjectSynth_VS\Libs&quot;&#xD;&#xA;)" />
+	  <Exec Command="if &quot;$(Username)&quot; == &quot;dud&quot; set build=true&#xD;&#xA;&#xD;&#xA;if defined build (&#xD;&#xA;copy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\Build\plugins&quot;&#xD;&#xA;&#xD;&#xA;copy &quot;$(TargetDir)*.xml&quot; &quot;$(ProjectDir)..\Build\plugins&quot;&#xD;&#xA;&#xD;&#xA;Xcopy /E /I /Y &quot;$(ProjectDir)..\Build\plugins&quot; &quot;D:\r2\r2profiles\RiskOfRain2\profiles\dev\BepInEx\plugins\salatt-SYNC\&quot;&#xD;&#xA;&#xD;&#xA;Xcopy /E /I /Y &quot;$(ProjectDir)..\Build\plugins&quot; &quot;D:\Projects\ProjectSynth\ProjectSynth_VS\Libs&quot;&#xD;&#xA;)" />
 	</Target>
 
 </Project>

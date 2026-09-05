@@ -1,6 +1,6 @@
 ﻿using BepInEx.Logging;
 
-namespace SyncLib
+namespace SYNC
 {
     internal static class Log
     {

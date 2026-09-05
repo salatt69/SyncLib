@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11408.102 d18.0
+VisualStudioVersion = 18.2.11408.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncLib", "SyncLib\SyncLib.csproj", "{B1C9D65A-9DCF-7A94-496A-02965D5BB5F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYNC", "SYNC\SYNC.csproj", "{B1C9D65A-9DCF-7A94-496A-02965D5BB5F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
