@@ -15,7 +15,7 @@ namespace SYNC
     {
         public const string PluginGUID = "com." + PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "salatt";
-        public const string PluginName = "SyncLib";
+        public const string PluginName = "SYNC";
         public const string PluginVersion = "0.0.0";
 
         internal static Plugin Instance;
@@ -29,7 +29,7 @@ namespace SYNC
 
             Log.Init(Logger);
 
-            Log.Info("SyncLib initializing...");
+            Log.Info("SYNC initializing...");
 
             LogBeats = false;
 
@@ -38,7 +38,7 @@ namespace SYNC
 
             try
             {
-                var go = new GameObject("SyncLib_MusicSyncRunner")
+                var go = new GameObject("SYNC_MusicSyncRunner")
                 {
                     hideFlags = HideFlags.HideAndDontSave
                 };
@@ -50,7 +50,7 @@ namespace SYNC
                 Log.Warning($"Failed to create MusicSyncRunner: {e}");
             }
             
-            Log.Info("SyncLib initialized!");
+            Log.Info("SYNC initialized!");
         }
     }
 }
