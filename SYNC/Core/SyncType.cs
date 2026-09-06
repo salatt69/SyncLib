@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SYNC.Core
+﻿namespace SYNC.Core
 {
     internal enum SyncType : byte
     {

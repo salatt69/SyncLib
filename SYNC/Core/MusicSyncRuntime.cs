@@ -51,7 +51,7 @@ namespace SYNC.Core
 
         // custom bar tracking
         private static int _customBarThisFrame;
-        
+
         // That allows custom bar to start at the first beat of the new track
         // and don't wait for "_beatsPerBar amount of beats" to pass, to invoke bar event   
         private static int _beatsUntilBar = _beatsPerBar - 1;

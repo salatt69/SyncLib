@@ -1,12 +1,8 @@
 using BepInEx;
 using HarmonyLib;
-using R2API;
-using RoR2;
 using SYNC.Core;
 using System;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace SYNC
 {
@@ -14,7 +10,7 @@ namespace SYNC
     internal class Plugin : BaseUnityPlugin
     {
         public const string PluginGUID = "com." + PluginAuthor + "." + PluginName;
-        public const string PluginAuthor = "salatt";
+        public const string PluginAuthor = "salatt69";
         public const string PluginName = "SYNC";
         public const string PluginVersion = "0.0.0";
 
@@ -49,7 +45,7 @@ namespace SYNC
             {
                 Log.Warning($"Failed to create MusicSyncRunner: {e}");
             }
-            
+
             Log.Info("SYNC initialized!");
         }
     }

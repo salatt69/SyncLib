@@ -1,7 +1,7 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using HarmonyLib;
 using UnityEngine;
 
 namespace SYNC.Core
@@ -13,7 +13,7 @@ namespace SYNC.Core
         private const int RedirectLogEvery = 50;
 
         private static int _redirectCount;
-        private static readonly HashSet<string> _musicPrefixes = [ "Play_Music" ];
+        private static readonly HashSet<string> _musicPrefixes = ["Play_Music"];
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(AkSoundEngine.PostEvent), [typeof(string), typeof(GameObject)])]

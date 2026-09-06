@@ -1,5 +1,4 @@
-﻿using System;
-using SYNC.Core;
+﻿using SYNC.Core;
 
 namespace SYNC.API
 {
